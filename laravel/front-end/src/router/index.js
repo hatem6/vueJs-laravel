@@ -7,7 +7,15 @@ import SignupEntreprisePart2 from "../components/Auth/SignUpEntreprisePart2.vue"
 import Contact from "../components/Contact.vue";
 import LandingPage from "../components/LandingPage.vue";
 import StudentDash from "../components/StudentDash/StudentDashboard.vue";
-
+import EntrepriseDash from "../components/EntrepriseDash/EntrepriseDashbord.vue";
+import OffersList from "../components/EntrepriseDash/OffersList.vue";
+import AddOffer from "../components/EntrepriseDash/AddOffer.vue";
+import DetailOffre from "../components/EntrepriseDash/DétailOffre.vue";
+import EditOffre from "../components/EntrepriseDash/EditOffre.vue";
+import TreatedRequest from "../components/EntrepriseDash/TreatedRequest.vue";
+import EntrepriseAccount from "../components/EntrepriseDash/Account.vue";
+import StudentsList from "../components/EntrepriseDash/StudentsList.vue";
+import DetailStudent from "../components/EntrepriseDash/DetailStudent.vue";
 const routes = [
    {
     path: "/",
@@ -15,14 +23,59 @@ const routes = [
     component: LandingPage,
     },
     {
+      path: "/DetailStudent",
+      name: "DetailStudent",
+      component: DetailStudent,
+      },
+    {
+      path: "/EntrepriseAccount",
+      name: "EntrepriseAccount",
+      component: EntrepriseAccount,
+      },
+    {
+      path: "/StudentsList",
+      name: "StudentsList",
+      component: StudentsList,
+      },
+    {
+      path: "/EditOffre",
+      name: "EditOffre",
+      component: EditOffre,
+      },
+      {
+        path: "/TreatedRequest",
+        name: "TreatedRequest",
+        component: TreatedRequest,
+        },
+    {
       path: "/StudentDash",
       name: "StudentDash",
       component: StudentDash,
       },
+      {
+        path: "/DetailOffre",
+        name: "DetailOffre",
+        component: DetailOffre,
+        },
+        {
+          path: "/AddOffer",
+          name: "AddOffer",
+          component: AddOffer,
+          },
+      {
+        path: "/EntrepriseDash",
+        name: "EntrepriseDash",
+        component: EntrepriseDash,
+        },
   {
     path: "/signupEtudiant",
     name: "signupEtudiant",
     component: SignupEtudiant,
+  },
+  {
+    path: "/OffersList",
+    name: "OffersList",
+    component: OffersList,
   },
   {
     path: "/signupEtudiantPart2",
@@ -49,6 +102,8 @@ const routes = [
     name: "signin",
     component: Signin,
   },
+ 
+  
  
   // Other routes...
 ];
