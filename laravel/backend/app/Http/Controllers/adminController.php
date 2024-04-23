@@ -27,6 +27,7 @@ class adminController extends Controller
         return response()->json([
             'message' => 'Account created successfully',
             'check' => true,
+            'role' => 'admin'
         ]);
     }
 

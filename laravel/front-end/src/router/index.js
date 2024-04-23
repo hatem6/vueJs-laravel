@@ -16,6 +16,12 @@ import TreatedRequest from "../components/EntrepriseDash/TreatedRequest.vue";
 import EntrepriseAccount from "../components/EntrepriseDash/Account.vue";
 import StudentsList from "../components/EntrepriseDash/StudentsList.vue";
 import DetailStudent from "../components/EntrepriseDash/DetailStudent.vue";
+import AdminDashboard from "../components/Admin/AdminDash.vue";
+import OffresList from "../components/Admin/OffresList.vue";
+import MessagesList from "../components/Admin/MessagesList.vue";
+import UsersList from "../components/Admin/UsersList.vue";
+import AccountSetting from "../components/Admin/AccountSetting.vue";
+import AddOfferAdmin from "../components/Admin/AddOffer.vue";
 const routes = [
    {
     path: "/",
@@ -102,7 +108,36 @@ const routes = [
     name: "signin",
     component: Signin,
   },
- 
+  {
+    path: "/Admin", // Define the path for the admin page
+    name: "admin", // Define the name for the admin route
+    component: AdminDashboard, // Specify the component for the admin page
+  },
+  {
+    path: "/OffresList",
+    name: "OffresList",
+    component: OffresList, 
+  },
+  {
+    path: "/MessagesList",
+    name: "MessagesList",
+    component: MessagesList, 
+  },
+  {
+    path: "/UsersList",
+    name: "UsersList",
+    component: UsersList, 
+  },
+  {
+    path: "/AccountSetting",
+    name: "AccountSetting",
+    component: AccountSetting, 
+  },
+  {
+    path: "/AddOfferAdmin",
+    name: "AddOfferAdmin",
+    component: AddOfferAdmin,
+    },
   
  
   // Other routes...
