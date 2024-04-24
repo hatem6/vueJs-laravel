@@ -6,7 +6,18 @@ import SignupEntreprise from "../components/Auth/SignUpEntreprise.vue";
 import SignupEntreprisePart2 from "../components/Auth/SignUpEntreprisePart2.vue";
 import Contact from "../components/Contact.vue";
 import LandingPage from "../components/LandingPage.vue";
+
+
 import StudentDash from "../components/StudentDash/StudentDashboard.vue";
+import NavBarStd from "../components/StudentDash/NavBarStd.vue";
+import DetailsOffreStd from "../components/StudentDash/DetailsOffreStd.vue";
+import PostulerCondidature from "../components/StudentDash/PostulerCondidature.vue";
+import ListeStagesAcceptes from "../components/StudentDash/ListeStagesAcceptes.vue";
+import Consulternotif from "../components/StudentDash/Consulternotif.vue";
+import EtudiantAccount from "../components/StudentDash/EtudiantAccount.vue";
+import OffersListStd from "../components/StudentDash/OffersListStd.vue";
+
+
 import EntrepriseDash from "../components/EntrepriseDash/EntrepriseDashbord.vue";
 import OffersList from "../components/EntrepriseDash/OffersList.vue";
 import AddOffer from "../components/EntrepriseDash/AddOffer.vue";
@@ -16,12 +27,7 @@ import TreatedRequest from "../components/EntrepriseDash/TreatedRequest.vue";
 import EntrepriseAccount from "../components/EntrepriseDash/Account.vue";
 import StudentsList from "../components/EntrepriseDash/StudentsList.vue";
 import DetailStudent from "../components/EntrepriseDash/DetailStudent.vue";
-import AdminDashboard from "../components/Admin/AdminDash.vue";
-import OffresList from "../components/Admin/OffresList.vue";
-import MessagesList from "../components/Admin/MessagesList.vue";
-import UsersList from "../components/Admin/UsersList.vue";
-import AccountSetting from "../components/Admin/AccountSetting.vue";
-import AddOfferAdmin from "../components/Admin/AddOffer.vue";
+
 const routes = [
    {
     path: "/",
@@ -44,7 +50,7 @@ const routes = [
       component: StudentsList,
       },
     {
-      path: "/EditOffre",
+      path: "/EditOffre/:idEntreprise/:id",
       name: "EditOffre",
       component: EditOffre,
       },
@@ -53,13 +59,8 @@ const routes = [
         name: "TreatedRequest",
         component: TreatedRequest,
         },
-    {
-      path: "/StudentDash",
-      name: "StudentDash",
-      component: StudentDash,
-      },
       {
-        path: "/DetailOffre",
+        path: "/detailoffre/:id",
         name: "DetailOffre",
         component: DetailOffre,
         },
@@ -108,36 +109,57 @@ const routes = [
     name: "signin",
     component: Signin,
   },
+
+
+{
+      path: "/StudentDash",
+      name: "StudentDash",
+      component: StudentDash,
+      },
   {
-    path: "/Admin", // Define the path for the admin page
-    name: "admin", // Define the name for the admin route
-    component: AdminDashboard, // Specify the component for the admin page
-  },
-  {
-    path: "/OffresList",
-    name: "OffresList",
-    component: OffresList, 
-  },
-  {
-    path: "/MessagesList",
-    name: "MessagesList",
-    component: MessagesList, 
-  },
-  {
-    path: "/UsersList",
-    name: "UsersList",
-    component: UsersList, 
-  },
-  {
-    path: "/AccountSetting",
-    name: "AccountSetting",
-    component: AccountSetting, 
-  },
-  {
-    path: "/AddOfferAdmin",
-    name: "AddOfferAdmin",
-    component: AddOfferAdmin,
+    path: "/EtudiantAccount",
+    name: "EtudiantAccount",
+    component: EtudiantAccount,
     },
+
+  {
+    path: "/Consulternotif",
+    name: "Consulternotif",
+    component: Consulternotif,
+    },
+  {
+    path: "/ListeStagesAcceptes",
+    name: "ListeStagesAcceptés",
+    component: ListeStagesAcceptes,
+    },
+  {
+    path: "/PostulerCondidature",
+    name: "PostulerCondidature",
+    component: PostulerCondidature,
+    },
+
+    {
+      path: "/DetailsOffreStd",
+      name: "DetailsOffreStd",
+      component: DetailsOffreStd,
+    },
+    
+    
+  {
+    path: "/OffersListStd",
+    name: "OffersListStd",
+    component: OffersListStd,
+    },
+  {
+    path: "/NavBarStd",
+    name: "NavBarStd",
+    component: NavBarStd,
+    },
+
+
+
+
+ 
   
  
   // Other routes...

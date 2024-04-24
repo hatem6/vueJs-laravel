@@ -27,4 +27,21 @@ class demandeController extends Controller
         
 
     }
+
+    
+
+public function getAllDemandes(Request $request,$idEtudiant){
+    // Fetch all offers
+    $demandes = Demande::where('idEtudiant', $idEtudiant)->get();
+    return response()->json([
+        'demandes' => $demandes,
+        'message' => 'All demandes fetched successfully for idEntreprise ' . $idEtudiant,
+        'check' => true,
+    ]);
+}
+
+
+
+
+
 }

@@ -6,7 +6,6 @@
         <div class="col-span-3">
             <Sidebar />
         </div>
-
         
         <div class="col-span-9 mt-24  mr-12">
             <h2 class="text-2xl font-bold mb-8 mt-8">Offers List</h2>
@@ -26,10 +25,7 @@
     <thead class="bg-gray-100 whitespace-nowrap">
       <tr>
         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        id
-        </th>
-        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            idEntreprise
+          Id
         </th>
         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
           status
@@ -41,86 +37,23 @@
             description
         </th>
         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Actions
+          Details
         </th>
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200 whitespace-nowrap">
-      <tr>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          John Doe
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          john@example.com
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          Admin
-        </td>
-       
-      
-        <td class="px-6 py-4 text-sm text-[#333]">
-          2022-05-15
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-            Développement Web
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-            <button class="text-green-500 hover:text-green-700 mr-4">
-            <router-link to="/detailoffre">Details</router-link>
-            </button>
-         <!--<button class="text-blue-500 hover:text-blue-700 mr-4">Edit</button>
-          <button class="text-red-500 hover:text-red-700">Delete</button>--> 
-        </td>
-      </tr>
-      <tr>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          Jane Smith
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          jane@example.com
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          User
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          2022-07-20
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-            Développement Web
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-            <button class="text-green-500 hover:text-green-700 mr-4">
-            <router-link to="/detailoffre">Details</router-link>
-            </button>
-          <!--<button class="text-blue-500 hover:text-blue-700 mr-4">Edit</button>
-          <button class="text-red-500 hover:text-red-700">Delete</button>--> 
-        </td>
-      </tr>
-      <tr>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          Alen doe
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          alen@example.com
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          User
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-          2022-07-21
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-            Développement Web
-        </td>
-        <td class="px-6 py-4 text-sm text-[#333]">
-            <button class="text-green-500 hover:text-green-700 mr-4">
-            <router-link to="/detailoffre">Details</router-link>
-            </button>
-          <!--<button class="text-blue-500 hover:text-blue-700 mr-4">Edit</button>
-          <button class="text-red-500 hover:text-red-700">Delete</button>--> 
-        </td>
-      </tr>
-    </tbody>
+                            <tr v-for="(offre, index) in offres" :key="index">
+                              <td class="px-6 py-4 text-sm text-[#333]">{{ index+1 }}</td>
+                                <td class="px-6 py-4 text-sm text-[#333]">{{ offre.status }}</td>
+                                <td class="px-6 py-4 text-sm text-[#333]">{{ offre.titre }}</td>
+                                <td class="px-6 py-4 text-sm text-[#333]">{{ offre.description }}</td>
+                                <td class="px-6 py-4 text-sm text-[#333]">
+                                    <button class="text-green-500 hover:text-green-700 mr-4">
+                                        <router-link :to="'/detailoffre/' + offre.id">Details</router-link>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
   </table>
 </div>
             </div>
@@ -129,14 +62,53 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import axios from "axios";
 import Navbar from './Navbar.vue';
 import Sidebar from './SideBar.vue';
 export default {
-    name: 'EntrepriseDashboard',
+  data() {
+    return {
+        offres:[],
+        idEntreprise:"",
+    };
+  },
     components: {
         Navbar,
         Sidebar
+    },
+    methods: {
+
+
+      async getAllOffres() {
+    let storedData = localStorage.getItem("EntrepriseAccountInfo"); 
+    this.idEntreprise = JSON.parse(storedData).id;
+    console.log(this.idEntreprise);
+    try {
+        const response = await axios.get(
+            `http://localhost:8000/api/getOffres/${this.idEntreprise}`
+        );
+        if (response.data.check === true) {
+            this.offres = response.data.offres;
+            console.table(this.offres);
+        } else {
+            toast.error("Something went wrong !", {
+                autoClose: 2000,
+            });
+        }
+    } catch (error) {
+        console.error("Error:", error);
     }
+},
+
+    
+
+},
+
+mounted() {
+this.getAllOffres();
+},
 }
 </script>
 

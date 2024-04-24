@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('idEtudiant'); // foreign
             $table->unsignedBigInteger('idOffreDeStage'); // foreign
-            $table->integer('statut');
+            $table->enum('statut',['en attente','accepté','rejeté']);
             $table->date('DateSoumission');
             $table->String('cv');
             $table->foreign('idEtudiant')->references('id')->on('etudiants')->onDelete('cascade')->onUpdate('cascade');

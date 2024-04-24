@@ -92,6 +92,7 @@ export default {
             }
             else if(response.data.role === "student"){
               let StudentAccount = {
+                id:response.data.user.id,
                 fullname:response.data.user.fullname,
                 email:response.data.user.email,
                 niveau:response.data.user.niveau,
@@ -105,7 +106,6 @@ export default {
             this.$router.push('/StudentDash');
             }
             else if(response.data.role === "admin"){
-              this.$router.push('/Admin');
               toast.success("Admin Account Exist !", {
               autoClose: 2000, 
             });

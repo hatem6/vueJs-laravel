@@ -1,7 +1,14 @@
 <template>
-    <Sidebar></Sidebar>
+    <div>
+      <NavBarStd class="w-full fixed z-50 "></NavBarStd>
+
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-3">
+            <Sidebar />
+          </div>
+          <div class="col-span-9 mt-24 mr-24">
     <div
-      class="relative md:left-40  md:w-3/4 my-4 border px-4 shadow-xl sm:mx-4 sm:rounded-xl sm:px-4 sm:py-4 md:mx-auto"
+      class="relative md:left-10  md:w-3/4 my-4 border px-4 shadow-xl sm:mx-4 sm:rounded-xl sm:px-4 sm:py-4 md:mx-auto"
       data-aos="fade-down"
     >
       <div class="flex flex-col border-b py-4 sm:flex-row sm:items-start">
@@ -32,7 +39,7 @@
           class="w-full rounded-md border bg-white px-2 py-2 outline-none ring-gray-600 focus:ring-1"
         />
       </div>
-
+  
       <div class="flex flex-col gap-4 border-b py-4 sm:flex-row">
         <p class="shrink-0 w-32 font-medium">Domaine</p>
         <input
@@ -47,7 +54,7 @@
           class="w-full rounded-md border bg-white px-2 py-2 outline-none ring-gray-600 focus:ring-1"
         />
       </div>
-
+  
       <div class="flex flex-col gap-4 border-b py-4 sm:flex-row">
         <p class="shrink-0 w-32 font-medium">Etablissement</p>
         <input
@@ -107,16 +114,20 @@
         </button>
       </div>
     </div>
+    </div>
+    </div>
+    </div>
   </template>
   <script>
   
-import "aos/dist/aos.css";
-import AOS from "aos";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
-import axios from "axios";
-import Sidebar from "./Sidebar.vue";
-export default {
+  import "aos/dist/aos.css";
+  import AOS from "aos";
+  import { toast } from "vue3-toastify";
+  import "vue3-toastify/dist/index.css";
+  import NavBarStd from "./NavBarStd.vue";
+  import axios from "axios";
+  import Sidebar from "./Sidebar.vue";
+  export default {
     data() {
       return {
         fullname: "",
@@ -130,10 +141,11 @@ export default {
         update: false,
         storedImage: "",
         imageUrl:"https://i.postimg.cc/mDWkzGDv/istockphoto-1200064810-170667a.jpg",
-
+  
       };
     },
     components:{
+        NavBarStd,
         Sidebar,
     },
   
@@ -148,7 +160,7 @@ export default {
         this.specialite=JSON.parse(storedData).specialite;
         this.typeStage=JSON.parse(storedData).typeStage;
         this.etablissement=JSON.parse(storedData).etablissement;
-
+  
       },
       async handleImageChange(event) {
         const file = event.target.files[0];
@@ -163,7 +175,7 @@ export default {
       },
       async saveChanges() {
         console.log(this.imageBase64);
-
+  
         let myjson = {
         fullname:this.fullname,
         niveau:this.niveau,
@@ -185,7 +197,7 @@ export default {
             toast.success("Account updated succesfully !", {
               autoClose: 2000, 
             });
-
+  
           } else {
             toast.error("Email not found !", {
               autoClose: 2000, 
@@ -211,4 +223,3 @@ export default {
     },
   };
   </script>
-  

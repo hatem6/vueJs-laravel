@@ -20,7 +20,14 @@ class VerifyCsrfToken extends Middleware
         'api/modifyStudent',
         'api/modifyEntreprise',
         'api/addDemande',
+        'api/getDemandes/{idEtudiant}',
         'api/addOffre',
+        'api/getEntreprise/{idEntreprise}',
+        'api/getOffres/{idEntreprise}',
+        'api/offreDetail/{idEntreprise}/{id}',
+        'api/offreDetail2/{id}',
+        'api/updateOffre',
+        'api/deleteOffre',
         
     ];
 }
