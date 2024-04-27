@@ -22,7 +22,7 @@
               <p class="text-gray-600 mb-4">{{ offre.description }}</p>
               <div class="flex flex-col md:flex-row items-center justify-between mb-4">
                 <div class="flex items-center">
-                  <p class="text-gray-500">{{ offre.idEntreprise }}</p>
+                  <p class="text-gray-500">{{ offre.entrepriseName }}</p>
                 </div>
                 <!-- Bouton pour importer le CV -->
                 <label for="uploadFile1" class="mt-4 md:mt-0 bg-gray-800 hover:bg-gray-700 text-white text-sm px-4 py-2.5 outline-none rounded w-max cursor-pointer block font-[sans-serif]">
@@ -38,7 +38,7 @@
                   <input type="file" id="uploadFile1" class="hidden" />
                 </label>
               </div>
-              <router-link to="/PostulerCondidature">
+              <router-link :to="'/PostulerCondidature/'+ offre.id">
                 <button class="ml-4 px-2 py-2 min-w-[140px] shadow-lg shadow-purple-200 rounded-full text-black text-sm tracking-wider font-medium outline-none border-2 border-purple-600 active:shadow-inner">
                   Postuler
                 </button>
@@ -56,33 +56,58 @@
   <script>
   import Sidebar from "./Sidebar.vue";
   import Navbar from "./NavBarStd.vue";
-  
+  import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import axios from "axios";
   export default {
     
     data() {
       return {
         offre: null,
-        id: -1
+        offerId:"",
       };
     },
     created() {
   
-      this.id = this.$route.params.id;
-  
-      this.fetchOffre(this.id);
+      this.offerId = this.$route.params.id;
+      this.getOfferDetail(this.offerId);
+      
     },
     methods: {
-      fetchOffre(id) {
-    console.log("Fetching offre with ID:", id);
-    OffreService.getoffreById(id)
-      .then(response => {
-        console.log("Response data:", response.data);
-        this.offre = response.data.data; 
-      })
-      .catch(error => {
-        console.error("Error fetching offre", error);
-      });
-  }
+
+      async getOfferDetail(id){
+
+        try {
+            const response = await axios.get(
+              `http://localhost:8000/api/offreDetail2/${id}`
+            );
+            if (response.data.check === true) {
+              const response2 = await axios.get(
+                `http://localhost:8000/api/getEntreprise/${response.data.offre.idEntreprise}`
+                );
+                console.log(response2.data.entreprise.name);
+                let myObject ={
+                  id:response.data.offre.id,
+                  titre:response.data.offre.titre,
+                  description:response.data.offre.description,
+                  entrepriseName:response2.data.entreprise.name,
+                  
+                }
+                console.log(myObject);
+                this.offre=myObject;
+           
+              } else {
+                  toast.error("Something went wrong !", {
+                      autoClose: 2000,
+                  });
+              }
+              } catch (error) {
+                  console.error("Error:", error);
+              }
+
+
+      }
+     
   
     },
     components: {

@@ -42,6 +42,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::get('/Demandes', [demandeController::class, 'Demandes']);
     Route::post('/addOffre', [offreController::class, 'addOffre']);
     Route::get('/getOffres/{idEntreprise}', [offreController::class, 'getAllOffres']);
+    Route::get('/allOffres', [offreController::class, 'AllOffres']);
     Route::get('/offreDetail/{idEntreprise}/{id}', [offreController::class, 'getOffreDetail']);
     Route::get('/offreDetail2/{id}', [offreController::class, 'OffreDetail']);
     Route::post('/updateOffre', [offreController::class, 'updateOffre']);

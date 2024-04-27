@@ -40,12 +40,12 @@
               
               <div class="flex px-4 py-4 sm:px-6">
   
-                    <button type="button"
-                        class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                    <button type="submit"
+                        class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                         Save
                     </button>
-                    <router-link to="/DetailsOffreStd"> <button type="button"
-                        class="inline-flex items-center ml-4 px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">     
+                    <router-link to="/OffersListStd"> <button type="button"
+                        class="inline-flex items-center ml-4 px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">     
                 Cancel
                     </button></router-link>
                 </div>
@@ -59,29 +59,66 @@
   <script>
   import Navbar from './NavBarStd.vue';
   import Sidebar from './Sidebar.vue';
-  
+  import { toast } from "vue3-toastify";
+  import "vue3-toastify/dist/index.css";
+  import axios from "axios";
   export default {
+    data() {
+      return {
+        idEtudiant: "",
+        idOffreDeStage:"",
+        statut: "en attente",
+        DateSoumission:"23-04-2024",
+        cv: "test.pdf",
+        fullname: '',
+        email: '',
+      };
+    },
     components: {
       Navbar,
       Sidebar
     },
-    data() {
-      return {
-        fullname: '',
-        email: '',
-        cv: null
-      };
-    },
+
+    created() {
+   this.idOffreDeStage=this.$route.params.id;
+   
+  },
     methods: {
       handleFileUpload(event) {
         this.cv = event.target.files[0];
       },
-      submitApplication() {
-        // Logique pour soumettre la candidature
-        console.log('Nom complet:', this.fullname);
-        console.log('E-mail:', this.email);
-        console.log('CV:', this.cv);
-        // Ici, vous pouvez ajouter la logique pour envoyer les données au backend
+
+      async submitApplication() {
+        try {
+          let storedData = localStorage.getItem("StudentAccountInfo"); 
+          this.idEtudiant = JSON.parse(storedData).id;
+
+          let myjson ={
+            idEtudiant:this.idEtudiant,
+            idOffreDeStage:this.idOffreDeStage,
+            statut:this.statut,
+            DateSoumission:this.DateSoumission,
+            cv:this.cv,
+
+          }
+          console.log(myjson);
+          
+            const response = await axios.post(
+                "http://localhost:8000/api/addDemande",myjson
+            );
+            if (response.data.check === true) {
+              toast.success("demande posted successfully !", {
+                      autoClose: 2000,
+                  });
+              } else {
+                  toast.error("Something went wrong !", {
+                      autoClose: 2000,
+                  });
+              }
+              } catch (error) {
+                  console.error("Error:", error);
+              }
+
       }
     }
   };

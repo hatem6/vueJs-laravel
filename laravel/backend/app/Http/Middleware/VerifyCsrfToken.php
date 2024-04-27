@@ -28,6 +28,7 @@ class VerifyCsrfToken extends Middleware
         'api/getDemandeById/{id}',
         'api/Demandes',
         'api/addOffre',
+        'api/allOffres',
         'api/getEntreprise/{idEntreprise}',
         'api/getOffres/{idEntreprise}',
         'api/offreDetail/{idEntreprise}/{id}',

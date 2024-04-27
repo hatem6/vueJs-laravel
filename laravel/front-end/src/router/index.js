@@ -148,13 +148,13 @@ const routes = [
     component: ListeStagesAcceptes,
     },
   {
-    path: "/PostulerCondidature",
+    path: "/PostulerCondidature/:id",
     name: "PostulerCondidature",
     component: PostulerCondidature,
     },
 
     {
-      path: "/DetailsOffreStd",
+      path: "/DetailsOffreStd/:id",
       name: "DetailsOffreStd",
       component: DetailsOffreStd,
     },

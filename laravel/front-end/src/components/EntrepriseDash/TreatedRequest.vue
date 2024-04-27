@@ -56,27 +56,38 @@
       methods: {
   
   
-        async getAllDemandes() {
+        
+    async getAllDemandes() {
       try {
-          const response = await axios.get(
-              "http://localhost:8000/api/Demandes"
-          );
-          if (response.data.check === true) {
-            for(let i=0;i<response.data.demandes.length;i++){
-              if(response.data.demandes[i].statut=="en attente"){
-                this.demandes.push(response.data.demandes[i]);
+        const storedData = localStorage.getItem("EntrepriseAccountInfo");
+        const idEntreprise = JSON.parse(storedData).id;
+
+        const response = await axios.get(`http://localhost:8000/api/getOffres/${idEntreprise}`);
+
+        if (response.data.check) {
+          for (const offre of response.data.offres) {
+            const demandeResponse = await axios.get(`http://localhost:8000/api/getDemandeByOfferId/${offre.id}`);
+            console.log(demandeResponse.data);
+            if (demandeResponse.data.check) {
+              for (const demande of demandeResponse.data.demandes) {
+                if(demande.statut=='en attente'){
+                  console.log(demande);
+                  this.demandes.push(demande);
+                }
+              
               }
+            } else {
+              toast.error("Something went wrong with fetching demandes!", { autoClose: 2000 });
             }
-              console.log(this.demandes);
-          } else {
-              toast.error("Something went wrong !", {
-                  autoClose: 2000,
-              });
           }
+        } else {
+          toast.error("Something went wrong with fetching offres!", { autoClose: 2000 });
+        }
       } catch (error) {
-          console.error("Error:", error);
+        console.error("Error:", error);
+        toast.error("An error occurred while fetching data!", { autoClose: 2000 });
       }
-  },
+    },
   
       
   
