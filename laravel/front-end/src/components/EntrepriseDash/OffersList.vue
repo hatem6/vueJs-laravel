@@ -13,7 +13,7 @@
                 <div class="flex justify-end mb-4">
                 <router-link to="/AddOffer">
                     <button type="button"
-                            class="px-6 py-2 rounded-full text-black text-sm tracking-wider font-medium outline-none border-2 border-purple-600 hover:bg-purple-600 hover:text-white transition-all duration-300 flex items-center gap-2">
+                            class="px-6 py-2 rounded-full text-black text-sm tracking-wider font-medium outline-none border-2 border-purple-600 hover:bg-purple-300 hover:text-white transition-all duration-300 flex items-center gap-2">
                         <i class="fas fa-plus"></i> <!-- Add icon -->
                         <span>Add new Offer</span>
                     </button>
@@ -42,18 +42,18 @@
       </tr>
     </thead>
     <tbody class="bg-white divide-y divide-gray-200 whitespace-nowrap">
-                            <tr v-for="(offre, index) in offres" :key="index">
-                              <td class="px-6 py-4 text-sm text-[#333]">{{ index+1 }}</td>
-                                <td class="px-6 py-4 text-sm text-[#333]">{{ offre.status }}</td>
-                                <td class="px-6 py-4 text-sm text-[#333]">{{ offre.titre }}</td>
-                                <td class="px-6 py-4 text-sm text-[#333]">{{ offre.description }}</td>
-                                <td class="px-6 py-4 text-sm text-[#333]">
-                                    <button class="text-green-500 hover:text-green-700 mr-4">
-                                        <router-link :to="'/detailoffre/' + offre.id">Details</router-link>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+          <tr v-for="(offre, index) in offres" :key="index">
+            <td class="px-6 py-4 text-sm text-[#333]">{{ index+1 }}</td>
+              <td class="px-6 py-4 text-sm text-[#333]">{{ offre.status }}</td>
+              <td class="px-6 py-4 text-sm text-[#333]">{{ offre.titre }}</td>
+              <td class="px-6 py-4 text-sm text-[#333]">{{ offre.description }}</td>
+              <td class="px-6 py-4 text-sm text-[#333]">
+                  <button class="text-green-500 hover:text-green-700 mr-4">
+                      <router-link :to="'/detailoffre/' + offre.id">Details</router-link>
+                  </button>
+              </td>
+          </tr>
+      </tbody>
   </table>
 </div>
             </div>

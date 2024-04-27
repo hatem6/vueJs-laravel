@@ -21,12 +21,7 @@
 
       <div class="border-t border-gray-200">
         <dl>
-          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">Statut</dt>
-            <dd class="mt-1 sm:col-span-2">
-                <input type="text" v-model="status" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </dd>
-          </div>
+          
           <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt class="text-sm font-medium text-gray-500">Titre</dt>
             <dd class="mt-1 sm:col-span-2">

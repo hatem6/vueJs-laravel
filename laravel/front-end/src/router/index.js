@@ -27,6 +27,10 @@ import TreatedRequest from "../components/EntrepriseDash/TreatedRequest.vue";
 import EntrepriseAccount from "../components/EntrepriseDash/Account.vue";
 import StudentsList from "../components/EntrepriseDash/StudentsList.vue";
 import DetailStudent from "../components/EntrepriseDash/DetailStudent.vue";
+import DetailDemande from "../components/EntrepriseDash/DetailDemande.vue";
+import EditDemande from "../components/EntrepriseDash/EditDemande.vue";
+
+
 
 const routes = [
    {
@@ -34,6 +38,12 @@ const routes = [
     name: "landingPage",
     component: LandingPage,
     },
+    {
+      path: "/DetailDemande/:id",
+      name: "DetailDemande",
+      component: DetailDemande,
+      },
+
     {
       path: "/DetailStudent",
       name: "DetailStudent",
@@ -64,6 +74,11 @@ const routes = [
         name: "DetailOffre",
         component: DetailOffre,
         },
+        {
+          path: "/EditDemande/:id",
+          name: "EditDemande",
+          component: EditDemande,
+          },
         {
           path: "/AddOffer",
           name: "AddOffer",

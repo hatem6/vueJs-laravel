@@ -35,4 +35,27 @@ class studentController extends Controller
 
     }
 
+
+    public function getStudentDetail($id)
+    {
+        // Fetch the specific offer for the given idEntreprise and id
+        $student = Etudiant::where('id', $id)->first();
+    
+        if (!$student) {
+            // Return a 404 Not Found response if the offer is not found
+            return response()->json([
+                'message' => 'Student not found',
+                'check' => false,
+            ], 404);
+        }
+    
+        // Return the details of the offer
+        return response()->json([
+            'student' => $student,
+            'message' => 'Student detail fetched successfully',
+            'check' => true,
+        ]);
+    }
+    
+
 }

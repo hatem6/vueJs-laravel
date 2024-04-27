@@ -1,10 +1,10 @@
 <template>
-  <div class="border-blue-500">
+  <div class="border-blue-500 fixed w-full z-50">
     <header class='border-b border-blue-500 font-[sans-serif] tracking-wide relative z-50 bg-blue-200'>
  
 
-  <div class='flex flex-wrap items-center gap-4 px-10 py-4 relative bg-white min-h-[70px] '>
-    <a href='javascript:void(0)' class='hidden max-lg:block'><img src="https://readymadeui.com/readymadeui.svg"
+  <div class='flex  flex-wrap items-center gap-4 px-10 py-4 relative bg-white min-h-[70px] '>
+    <a href='javascript:void(0)' class='hidden max-lg:block'><img src="./logo.png"
         alt="logo" class='w-36' /></a>
 
     <div id="collapseMenu"
