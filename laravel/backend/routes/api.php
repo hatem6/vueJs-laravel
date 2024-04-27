@@ -38,6 +38,7 @@ Route::group(['middleware' => 'cors'], function () {
     Route::delete('/deleteDemande/{id}', [demandeController::class, 'deleteDemande']);
     Route::get('/getDemandes/{idEtudiant}', [demandeController::class, 'getAllDemandes']);
     Route::get('/getDemandeById/{id}', [demandeController::class, 'getDemandeById']);
+    Route::get('/getDemandeByOfferId/{offerId}', [demandeController::class, 'getDemandeByOfferId']);
     Route::get('/Demandes', [demandeController::class, 'Demandes']);
     Route::post('/addOffre', [offreController::class, 'addOffre']);
     Route::get('/getOffres/{idEntreprise}', [offreController::class, 'getAllOffres']);

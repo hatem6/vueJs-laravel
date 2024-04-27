@@ -89,6 +89,7 @@ export default {
         const response = await axios.get(
             `http://localhost:8000/api/getOffres/${this.idEntreprise}`
         );
+        
         if (response.data.check === true) {
             this.offres = response.data.offres;
             console.table(this.offres);

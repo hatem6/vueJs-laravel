@@ -51,7 +51,7 @@
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <!-- Boucle à travers les demandes d'étudiants -->
-            <tr v-for="(demande, index) in storedDemandes" :key="index">
+            <tr v-for="(demande, index) in storedDemands" :key="index">
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.fullname }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.idEtudiant }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.offerId}}</td>
@@ -84,105 +84,101 @@
   </div>
   </template>
   
-
-
   <script>
-  import { toast } from "vue3-toastify";
-  import "vue3-toastify/dist/index.css";
-  import axios from "axios";
-  import Navbar from './Navbar.vue';
-  import Sidebar from './SideBar.vue';
-  export default {
-    data() {
-      return {
-          demandes:[],
-          storedDemandes:[],
-          filtredDemandes:[],
-          
-      };
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+import axios from "axios";
+import Navbar from './Navbar.vue';
+import Sidebar from './SideBar.vue';
+
+export default {
+  data() {
+    return {
+      demands: [],
+      filteredDemands: [],
+      storedDemands:[],
+    };
+  },
+  components: {
+    Navbar,
+    Sidebar
+  },
+  methods: {
+
+    filterByStatut(statut){
+      this.storedDemands=[];
+      for(let i=0;i<this.filteredDemands.length;i++){
+        if( this.filteredDemands[i].statut==statut){
+          this.storedDemands.push(this.filteredDemands[i]);
+        }
+      }
     },
-      components: {
-          Navbar,
-          Sidebar
-      },
-      methods: {
 
-
-        filterByStatut(statut){
-          this.storedDemandes = [];
-          for(let i=0;i<this.filtredDemandes.length;i++){
-            if(this.filtredDemandes[i].statut==statut){
-              this.storedDemandes.push(this.filtredDemandes[i]);
-            }
-          }
-        },
-
-      
-        async getAllDemandes() {
-     
+    async getAllDemandes() {
       try {
-          const response = await axios.get(
-             "http://localhost:8000/api/Demandes"
-          );
-          if (response.data.check === true) {
-            this.demandes = response.data.demandes;
-            console.log(this.demandes);
-            for(let i=0;i<this.demandes.length;i++){
-              const response2 = await axios.get(`http://localhost:8000/api/getStudentDetail/${this.demandes[i].idEtudiant}`);
-              let myObject = {
-                idEtudiant:response2.data.student.id,
-                fullname:response2.data.student.fullname,
-                offerId:this.demandes[i].idOffreDeStage,
-                typeStage:response2.data.student.typeStage,
-                statut:this.demandes[i].statut,
-                demandeId:this.demandes[i].id,
+        const storedData = localStorage.getItem("EntrepriseAccountInfo");
+        const idEntreprise = JSON.parse(storedData).id;
+
+        const response = await axios.get(`http://localhost:8000/api/getOffres/${idEntreprise}`);
+
+        if (response.data.check) {
+          for (const offre of response.data.offres) {
+            const demandeResponse = await axios.get(`http://localhost:8000/api/getDemandeByOfferId/${offre.id}`);
+
+            if (demandeResponse.data.check) {
+              for (const demande of demandeResponse.data.demandes) {
+                const studentResponse = await axios.get(`http://localhost:8000/api/getStudentDetail/${demande.idEtudiant}`);
+                const student = studentResponse.data.student;
+
+                const myObject = {
+                  idEtudiant: student.id,
+                  fullname: student.fullname,
+                  offerId: demande.idOffreDeStage,
+                  typeStage: student.typeStage,
+                  statut: demande.statut,
+                  demandeId: demande.id,
+                };
+
+                this.demands.push(myObject);
               }
-              this.filtredDemandes.push(myObject);
+            } else {
+              toast.error("Something went wrong with fetching demandes!", { autoClose: 2000 });
             }
-             
-              console.table(this.filtredDemandes);
-              this.storedDemandes=this.filtredDemandes;
-              
-          } else {
-              toast.error("Something went wrong !", {
-                  autoClose: 2000,
-              });
           }
+          this.filteredDemands = [...this.demands];
+          this.storedDemands=this.filteredDemands;
+          console.table(this.filteredDemands);
+        } else {
+          toast.error("Something went wrong with fetching offres!", { autoClose: 2000 });
+        }
       } catch (error) {
-          console.error("Error:", error);
+        console.error("Error:", error);
+        toast.error("An error occurred while fetching data!", { autoClose: 2000 });
       }
+    },
+
+    async deleteDemande(id) {
+      try {
+        const response = await axios.delete(`http://localhost:8000/api/deleteDemande/${id}`);
+        if (response.data.delete === true) {
+          this.demands = this.demands.filter(demande => demande.demandeId !== id);
+          window.location.reload();
+        } else {
+          toast.error("Failed to delete the demande!", { autoClose: 2000 });
+        }
+      } catch (error) {
+        console.error("Error", error);
+        toast.error("An error occurred while deleting the demande!", { autoClose: 2000 });
+      }
+    }
   },
 
-
-  async deleteDemande(id){
-    console.log(id);
-        try {
-          const response = await axios.delete(`http://localhost:8000/api/deleteDemande/${id}`);
-          if (response.data.delete === true) {
-            window.location.reload();
-          } else {
-            toast.error("Something went wrong !", {
-            autoClose: 2000, 
-            });
-          }
-      } catch (error) {
-          console.error("Error", error);
-      }
-        
-      }
-
-  
-      
-  
-  },
-  
   mounted() {
-  this.getAllDemandes();
-  },
+    this.getAllDemandes();
   }
-  </script>
+};
+</script>
   
   <style>
-  /* Styles spécifiques à votre tableau de bord d'entreprise */
   </style>
   

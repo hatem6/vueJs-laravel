@@ -65,6 +65,19 @@ public function getDemandeById(Request $request,$id){
 }
 
 
+
+
+public function getDemandeByOfferId(Request $request,$offerId){
+    // Fetch all offers
+    $demandes = Demande::where('idOffreDeStage', $offerId)->get();
+    return response()->json([
+        'demandes' => $demandes,
+        'message' => 'demandes fetched successfully',
+        'check' => true,
+    ]);
+}
+
+
 public function updateStatut(Request $request ,$id){
     $requestData = $request->all();
     $ExistingDemande = Demande::where('id', $id)->first();
