@@ -52,8 +52,8 @@
           <tbody class="bg-white divide-y divide-gray-200">
             <!-- Boucle à travers les demandes d'étudiants -->
             <tr v-for="(demande, index) in storedDemandes" :key="index">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.idEtudiant }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.fullname }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.idEtudiant }}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.offerId}}</td>
               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ demande.typeStage }}</td>
               <td class="px-6 py-4 text-sm text-[#333]">
