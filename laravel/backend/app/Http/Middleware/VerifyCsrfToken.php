@@ -35,6 +35,9 @@ class VerifyCsrfToken extends Middleware
         'api/offreDetail2/{id}',
         'api/updateOffre',
         'api/deleteOffre',
+
+        'api/notification',
+        'api/getAllNotifications',
         
     ];
 }

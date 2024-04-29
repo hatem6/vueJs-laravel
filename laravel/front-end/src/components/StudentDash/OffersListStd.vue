@@ -94,8 +94,11 @@ export default {
                 "http://localhost:8000/api/allOffres"
             );
             if (response.data.check === true) {
+              console.log(response.data.offres);
+              
               for(let i=0;i<response.data.offres.length;i++){
-                const response2 = await axios.get(
+                if(response.data.offres[i].status=='accepté'){
+                  const response2 = await axios.get(
                 `http://localhost:8000/api/getEntreprise/${response.data.offres[i].idEntreprise}`
                 );
                 let myObject ={
@@ -110,6 +113,8 @@ export default {
                 console.log(this.offres);
                 this.filteredOffres=this.offres;
               }
+              }
+                
               } else {
                   toast.error("Something went wrong !", {
                       autoClose: 2000,
@@ -127,6 +132,12 @@ export default {
     search(searchQuery, searchCriteria) {
     const query = searchQuery.toLowerCase();
     const queryWords = query.split(" ");
+    
+    if (query === "all") {
+    this.filteredOffres = this.offres;
+    return;
+  }
+
     this.filteredOffres = this.offres.filter((offre) => {
       if (searchCriteria === "title") {
         return queryWords.some((word) =>
@@ -141,6 +152,7 @@ export default {
           offre.entrepriseName.toLowerCase().includes(word)
         );
       }
+      
     });
   },
 

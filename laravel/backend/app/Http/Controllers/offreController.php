@@ -174,28 +174,7 @@ public function getAllOffres(Request $request,$idEntreprise){
     }
 
     
-    static public function chercherOffres($idEntreprise,$domaine,$description,$titre) {
-        if ($idEntreprise == "all" && $domaine == "all" && $description == "all" && $titre == "all") {
-             $data = Offre::all(); 
-         }
-         else {
-             $data = Offre::query()
-             ->when($idEntreprise != "all", function ($query) use ($idEntreprise) {
-                 return $query->where('idEntreprise', 'LIKE' , '%'.$idEntreprise.'%');
-             })
-             ->when($domaine != "all", function ($query) use ($domaine) {
-                 return $query->where('domaine', 'LIKE' , '%'.$domaine.'%');
-             })
-             ->when($description != "all", function ($query) use ($description)  {
-                 return $query->where('description', 'LIKE' , '%'.$description.'%');
-             })
-             ->when($titre != "all", function ($query) use ($titre) {
-                 return $query->where('titre', 'LIKE' , '%'.$titre.'%');
-             })->get();
-         }
-         return $data;
-         //print($data); // for testing
-     }
+    
 
     
 

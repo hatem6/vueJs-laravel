@@ -78,19 +78,10 @@
         <div
           class="flex h-70 w-full flex-col items-center justify-center gap-4 rounded-xl border border-dashed border-gray-300 p-5 text-center"
         >
-          <div
-            v-if="imageBase64 == null"
-            class="h-16 w-16 rounded-full">
-            <img
-            class="h-16 w-16 rounded-ful"
-            :src="imageUrl"
-            alt=""
-          />
-        </div>
           <img
-            v-if="imageBase64 != null"
+            
             class="h-16 w-16 rounded-full"
-            :src="imageBase64"
+            :src="imageUrl"
             alt=""
           />
           <p class="text-sm text-gray-600">
@@ -137,7 +128,6 @@
         specialite:"",
         typeStage:"",
         etablissement:"",
-        imageBase64: null,
         update: false,
         storedImage: "",
         imageUrl:"https://i.postimg.cc/mDWkzGDv/istockphoto-1200064810-170667a.jpg",
@@ -164,17 +154,28 @@
       },
       async handleImageChange(event) {
         const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            // Set the base64 URL to your data property
-            this.imageBase64 = reader.result;
-          };
-          reader.readAsDataURL(file);
+      if (file) {
+        // Read the file and set the logoURL
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageUrl = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+      },
+
+      getImageUrl(){
+        let storedImageUrl= localStorage.getItem("EtudiantLogo");
+        if (storedImageUrl) {
+          this.imageUrl = JSON.parse(storedImageUrl).image;
         }
       },
+
       async saveChanges() {
-        console.log(this.imageBase64);
+        let jsonUrl ={
+        image:this.imageUrl,
+      }
+      localStorage.setItem("EtudiantLogo",JSON.stringify(jsonUrl));
   
         let myjson = {
         fullname:this.fullname,
@@ -210,6 +211,7 @@
     },
     mounted() {
      this.getAccountData();
+     this.getImageUrl();
     },
     created() {
       this.$nextTick(() => {
