@@ -137,6 +137,7 @@ Cancel
         typeOffre:"",
         cahierCharge:"test.pdf",
         email:"",
+        entrepriseName:"",
     };
   },
     components: {
@@ -164,13 +165,32 @@ Cancel
         cahierCharge:this.cahierCharge,
         }
         console.log(myjson);
+
+        const currentDate = new Date();
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const year = currentDate.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+        let myObj={
+          idEtudiant:0,
+          idEntreprise:this.idEntreprise,
+          message:this.entrepriseName+" a ajouté une nouvelle offre de stage en "+this.titre,
+          destination:"Entreprise",
+          type:"offre",
+          visibility:"shown",
+          date:formattedDate,
+        }
         
         try {
+
         const response = await axios.post(
             "http://localhost:8000/api/addOffre",
             myjson,
             
         );
+        const response2= await axios.post("http://localhost:8000/api/notification",myObj);
+        console.log(response2.data);
+
         if (response.data.check === true) {
             toast.success("Offre added succesfully !", {
             autoClose: 2000, 
@@ -188,12 +208,15 @@ Cancel
         getAccountData() {
             let storedData = localStorage.getItem("EntrepriseAccountInfo");
             this.email = JSON.parse(storedData).email;
+            this.entrepriseName=JSON.parse(storedData).name;
+            
             },
 
 },
     
   mounted() {
    this.getAccountData();
+   
   },
   }
   </script>

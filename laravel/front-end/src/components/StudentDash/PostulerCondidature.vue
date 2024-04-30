@@ -116,7 +116,7 @@
         let myObj={
           idEtudiant:this.idEtudiant,
           idEntreprise:this.idEntreprise,
-          message:this.fullname+" a déposer une demande de stage en "+response.data.offre.titre+" a l'entreprise "+this.entrepriseName,
+          message:this.fullname+" a déposer une demande de stage en "+response.data.offre.titre,
           destination:"Entreprise",
           type:"demande",
           visibility:"shown",
