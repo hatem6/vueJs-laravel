@@ -56,3 +56,16 @@ Route::group(['middleware' => 'cors'], function () {
     Route::post('/notification', [notificationController::class, 'notification']);
     Route::get('/getAllNotifications', [notificationController::class, 'getAllNotifications']);
 });
+
+
+Route::group(['middleware' => 'cors'], function () {
+    Route::get('/states', [adminController::class,'states']);
+    Route::get('/getAllOffreAdmin', [adminController::class, 'getAllOffresAdmin']);
+    Route::post('/updateOfferStatus/{id}', [adminController::class, 'updateOfferStatus']);
+    Route::delete('/deleteOffer/{id}', [adminController::class, 'deleteOffer']);
+    Route::post('/admin', [adminController::class, 'signUpAdmin']);
+    Route::get('/enterprisesAdmin', [adminController::class, 'getAllEnterprises']);
+    Route::delete('/enterprisesAdmin/{id}', [adminController::class, 'deleteEntreprise']);
+    Route::get('/studentsAdmin', [adminController::class, 'getAllStudents']);
+    Route::delete('/deleteStudentAdmin/{id}', [adminController::class, 'deleteStudent']);
+});
