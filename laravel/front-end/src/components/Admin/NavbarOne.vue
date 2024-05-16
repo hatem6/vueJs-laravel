@@ -15,9 +15,7 @@
 				<i class='bx bxs-bell'></i>
 				<span class="num">0</span>
 			</a>
-			<a href="#" class="profile">
-				<img src="../../assets/people.png">
-			</a>
+			
 		</nav>
 </template>
 
