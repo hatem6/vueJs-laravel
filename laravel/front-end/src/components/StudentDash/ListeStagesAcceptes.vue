@@ -31,15 +31,17 @@
         </header>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Display each stage -->
-          <div v-for="(stage, index) in storedStages" :key="index" class="bg-white shadow rounded-lg p-4">
-            <h3 class="text-lg font-semibold mb-2">{{ stage.title }}</h3>
-            <p class="text-gray-600 mb-4">{{ stage.description }}</p>
+          <div v-for="(stage, index) in storedStages" :key="index" class="bg-blue-100 shadow rounded-lg p-4">
+            <h3 class="text-lg font-semibold mb-2"><span class="text-blue-800 font-bold">Titre :</span> {{ stage.title }}</h3>
+            <p class="text-gray-600 mb-4"><span class="text-blue-800 font-bold">Description :</span>{{ stage.description }}</p>
             <div class="flex items-center justify-between">
-              <span class="text-gray-500">{{ stage.company }}</span>
-              <div v-if="stage.statut=='accepté'" @click="selectStage(stage)" class="px-4 py-2 bg-green-400 text-white rounded hover:bg-green-500">Affecter</div>
-              <div v-if="stage.statut=='en attente'" @click="selectStage(stage)" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">en attente</div>
-              <div v-if="stage.statut=='rejeté'" @click="selectStage(stage)" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500">rejeté</div>
-              <div v-if="stage.statut=='en execution'" @click="selectStage(stage)" class="px-4 py-2 bg-orange-400 text-white rounded hover:bg-orange-400">en execution</div>
+              <span class="text-gray-500"><span class="text-blue-800 font-bold">Company :</span>{{ stage.company }}</span>
+              <div>
+              <button v-if="stage.statut=='accepté'" @click.prevent="affecter(stage.DemandeId)" class="px-4 py-2 bg-green-400 text-white rounded hover:bg-green-500">Affecter</button>
+              <div v-if="stage.statut=='en attente'" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">en attente</div>
+              <div v-if="stage.statut=='rejeté'"  class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500">rejeté</div>
+              <div v-if="stage.statut=='en execution'" class="px-4 py-2 bg-orange-400 text-white rounded hover:bg-orange-400">en execution</div>
+            </div>
             </div>
           </div>
         </div>
@@ -70,11 +72,25 @@ export default {
     }
   },
   methods: {
-    selectStage(stage) {
-      // Logique pour affecter le stage sélectionné
-      console.log("Stage sélectionné :", stage)
-      // Rediriger ou afficher un message selon les besoins
+    
+
+    async affecter(id){
+      let myObject ={
+            statut:"en execution",
+        }
+      console.log(myObject);
+      const response = await axios.post(`http://localhost:8000/api/updateSatutDemande/${id}`,myObject);
+      if (response.data.update === true) {
+            toast.success("Statut updated succesfully !", {
+            autoClose: 2000, 
+            });
+          } else {
+            toast.error("Something went wrong !", {
+            autoClose: 2000, 
+            });
+          }
     },
+
 
     async filterByStatut(statut) {
       try {
@@ -102,9 +118,11 @@ export default {
             let myobject = {
               title: response2.data.offre.titre,
               description: response2.data.offre.description,
+              DemandeId:demande.id,
               company: response3.data.entreprise.name,
               statut: demande.statut
             }
+            console.log(demande);
             this.stagesList.push(myobject);
           }
           console.table(this.stagesList);
